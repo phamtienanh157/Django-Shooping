@@ -5,18 +5,18 @@
 {% block content %}
 <div class="row p-5">
 
-{% for book in Books %}
+{% for bookItem in Books %}
     <div class="col">
         <div class="card" style="width: 200px;">
-            <img src="{{book.image}}" class="card-img-top image-fluid" alt="">
+            <img src="{{bookItem.image}}" class="card-img-top image-fluid" alt="">
             <div class="card-body">
-                <h6 class="card-title">{{book.title}}</h6>
-                <p id="price" class="card-text">{{book.price}}</p>
-                <a href="{{book.id}}" class="btn btn-primary btn-sm">Xem ngay</a>
+                <h6 class="card-title">{{bookItem.book.title}}</h6>
+                <p id="price" class="card-text">{{bookItem.price}}</p>
+                <a href="{{bookItem.id}}" class="btn btn-primary btn-sm">Xem ngay</a>
             </div>
         </div>
     </div>
-
 {% endfor %}
+
 </div>
 {% endblock %}

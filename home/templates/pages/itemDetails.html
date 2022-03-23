@@ -1,10 +1,64 @@
-{% extends 'common/base.html' %} 
-
-{% block title %}Book Details{% endblock %}
-
+{% extends 'common/base.html' %} {% block title %}Book Details{% endblock %} 
 {% block content %}
-<p class="fs-1">{{book.title}}</p>
-<p class="fs-1">{{book.author}}</p>
-<p class="fs-1">{{book.price}}</p>
 
+<div class="d-flex py-5">
+  <img src="{{bookItem.image}}" class="img-fluid" width="450" />
+  <div>
+    <div>
+      <h3 class="title">{{bookItem.book.title}}</h3>
+      <p class="detail-price">{{bookItem.price}} ₫</p>
+    </div>
+    <h5>Mô tả</h5>
+    <p>{{bookItem.book.summary}}</p>
+    <div class="input-group mt-5" style="width:120px;">
+      <span class="input-group-btn">
+        <button
+          type="button"
+          class="quantity-left-minus btn btn-outline-secondary btn-number"
+          data-type="minus"
+          data-field=""
+        >
+          <span class="glyphicon glyphicon-minus">-</span>
+        </button>
+      </span>
+      <input
+        type="text"
+        id="quantity"
+        name="quantity"
+        class="form-control input-number"
+        value="0"
+        min="1"
+        max="100"
+        style="padding-left:20px;"
+      />
+      <span class="input-group-btn">
+        <button
+          type="button"
+          class="quantity-right-plus btn btn-outline-secondary btn-number"
+          data-type="plus"
+          data-field=""
+        >
+          <span class="glyphicon glyphicon-plus">+</span>
+        </button>
+      </span>
+    </div>
+    <button type="button" class="btn btn-primary mt-3">Mua ngay</button>
+  </div>
+</div>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script>
+  $(document).ready(function () {
+    var quantitiy = 0;
+    $(".quantity-right-plus").click(function (e) {
+      var quantity = parseInt($("#quantity").val());
+      $("#quantity").val(quantity + 1);
+    });
+    $(".quantity-left-minus").click(function (e) {
+      var quantity = parseInt($("#quantity").val());
+      if (quantity > 0) {
+        $("#quantity").val(quantity - 1);
+      }
+    });
+  });
+</script>
 {% endblock %}
