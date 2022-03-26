@@ -3,3 +3,7 @@
   font-weight: 500;
   color: rgb(255, 66, 78);
 }
+
+.card-title.home-title {
+  font-size: 14px;
+}
