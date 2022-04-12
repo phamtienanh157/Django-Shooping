@@ -38,6 +38,24 @@ def readStores():
         state='CA').exclude(city='San Diego')
 
 
+def readPerformance():
+    store_items = Store.objects.filter(city='San Diego').only('name')
+    store_items.query.get_loaded_field_names()
+
+    # All Store records with no city
+    store_items = Store.objects.defer('city').all()
+    store_items.query.get_loaded_field_names()
+
+    # Item names on the breakfast menu
+    store_items = Store.objects.filter(city='San Diego').values('name')
+    # Outputs: <QuerySet [{'name': 'Oatmeal'}, {'name': 'Oman'}]>
+
+    # All Store records with no email
+    all_stores = Store.objects.values_list('email','name','city').all()
+    # Outputs: <QuerySet [('corporate@coffeehouse.com', 'Corporate', 'San Diego'),
+    # ('downtown@coffeehouse.com', 'Downtown', 'San Diego'), ('uptown@coffeehouse.com',
+    # 'Uptown', 'San Diego'), ('midtown@coffeehouse.com', 'Midtown', 'San Diego')]>
+
 def updateStores():
     Store.objects.all().update(email="contact@coffeehouse.com")
 
@@ -55,22 +73,3 @@ def deleteStores():
     Store.objects.filter(city='San Diego').delete()
 
 
-def readPerformance():
-    store_items = Store.objects.filter(city='San Diego').only('name')
-    store_items.query.get_loaded_field_names()
-
-    # All Store records with no city
-    store_items = Store.objects.defer('city').all()
-    store_items.query.get_loaded_field_names()
-
-
-#################################
-def getListBooks(request):
-    data = {'Books': Book.objects.all()}
-    return render(request, 'pages/home.html', data)
-
-
-def getBookById(request, id):
-    book = Book.objects.get(id=id)
-    data = {'book': book}
-    return render(request, 'pages/itemDetails.html', data)
