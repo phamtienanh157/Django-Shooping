@@ -1,12 +1,10 @@
 from atexit import register
 from django.contrib import admin
-from .models import Book, Author, Publisher, Category, BookItem
+from .models import Store
 # Register your models here.
 
 
-# class BookAdmin(admin.ModelAdmin):
-#     list_display = ['title', 'author', 'price']
-# admin.site.register(Book, BookAdmin)
+class StoreAdmin(admin.ModelAdmin):
+    list_display = ['name', 'address', 'city', 'email']
+admin.site.register(Store, StoreAdmin)
 
-myModels = [Book, Author, Publisher, Category, BookItem]
-admin.site.register(myModels)

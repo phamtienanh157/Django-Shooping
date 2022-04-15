@@ -1,11 +1,14 @@
 from urllib import response
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Book, Store
+from .models import Store
 # Create your views here.
 
 
-def createStores():
+def renderView(request):
+    return render(request, 'pages/home.html')
+
+def createStores(request):
     # Create model
     store_corporate = Store(name='Corporate', address='624 Broadway', city='San Diego', state='CA',
                             email='corporate@coffeehouse.com')
@@ -22,8 +25,9 @@ def createStores():
     # Call bulk_create to create records in a single call
     Store.objects.bulk_create(store_list)
 
+    return render(request, 'pages/home.html')
 
-def readStores():
+def readStores(request):
     # Query with all() method or equivalent SQL: 'SELECT * FROM ...'
     all_stores = Store.objects.all()
 
@@ -37,8 +41,9 @@ def readStores():
     ca_stores_without_san_diego = Store.objects.filter(
         state='CA').exclude(city='San Diego')
 
+    return render(request, 'pages/home.html')
 
-def readPerformance():
+def readPerformance(request):
     store_items = Store.objects.filter(city='San Diego').only('name')
     store_items.query.get_loaded_field_names()
 
@@ -55,8 +60,9 @@ def readPerformance():
     # Outputs: <QuerySet [('corporate@coffeehouse.com', 'Corporate', 'San Diego'),
     # ('downtown@coffeehouse.com', 'Downtown', 'San Diego'), ('uptown@coffeehouse.com',
     # 'Uptown', 'San Diego'), ('midtown@coffeehouse.com', 'Midtown', 'San Diego')]>
+    return render(request, 'pages/home.html')
 
-def updateStores():
+def updateStores(request):
     Store.objects.all().update(email="contact@coffeehouse.com")
 
     # select_for_update
@@ -67,9 +73,12 @@ def updateStores():
         # Add complex update logic here for each store
         # save() method called on each member to update
         store.save()
+    return render(request, 'pages/home.html')
 
 
-def deleteStores():
+def deleteStores(request):
     Store.objects.filter(city='San Diego').delete()
+
+    return render(request, 'pages/home.html')
 
 
